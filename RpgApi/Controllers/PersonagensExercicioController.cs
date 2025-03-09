@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using RpgApi.Models;
 using RpgApi.Models.Enums;
 
@@ -85,12 +86,17 @@ namespace RpgApi.Controllers
 
         [HttpGet("GetByClasse")]
         public IActionResult GetByClasse(int id_classe){
-            return Ok(personagens);
+            var procurar_classe = personagens.FindAll(n=> (int)n.Classe == id_classe );
+            if(procurar_classe.IsNullOrEmpty()){
+                return NotFound("ID de Classe não existente");
+            }
+            return Ok(procurar_classe);
+            
         }
 
 
 
-    
+   
 
 
     }
